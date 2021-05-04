@@ -53,7 +53,6 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
         // App specific stuff
         screen.fill(0xFFFFFF);
-        screen.drawPixel(3,3,color);
 
     }
 
@@ -129,9 +128,12 @@ public class ScreenRenderer extends Canvas implements Runnable{
         if (phi > 2*Math.PI) {
             phi -= 2*Math.PI;
         }
-        // Random dots
-        getScreen().drawPixel((int)(this.WIDTH/this.scale*Math.random()),(int)(this.HEIGTH/scale*Math.random()),
+        getScreen().drawPixel((int)(4),(int)(6),
                 0x0);
+        for (int i = 0; i == WIDTH*HEIGTH; i++) {
+            getScreen().drawPixel((int)i%WIDTH,(int)i/WIDTH,
+                    0x0);
+        }
     }
 
     public Screen getScreen() {
