@@ -129,7 +129,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
         }
         getScreen().drawPixel(200,142,
                 0x0);
-        for (int i = 0; i <= (WIDTH*HEIGTH)/scale; i++) {
+        for (int i = 0; i <= (WIDTH*HEIGTH)-1; i++) {
             getScreen().drawPixel((i%(WIDTH/scale)),((i/WIDTH)/scale),
                     0x8cfc03);
         }
