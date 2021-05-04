@@ -24,9 +24,8 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
     private Thread thread;
     private boolean running = false;
-    private int fps = 25;
-    private int ups = 25;
-    private int color = 0xEC2A00;
+    private int fps = 60;
+    private int ups = 60;
 
     // App specific stuff
     double phi = 0;
@@ -128,11 +127,11 @@ public class ScreenRenderer extends Canvas implements Runnable{
         if (phi > 2*Math.PI) {
             phi -= 2*Math.PI;
         }
-        getScreen().drawPixel((int)(4),(int)(6),
+        getScreen().drawPixel(200,142,
                 0x0);
-        for (int i = 0; i == WIDTH*HEIGTH; i++) {
-            getScreen().drawPixel((int)i%WIDTH,(int)i/WIDTH,
-                    0x0);
+        for (int i = 0; i <= (WIDTH*HEIGTH)/scale; i++) {
+            getScreen().drawPixel((i%(WIDTH/scale)),((i/WIDTH)/scale),
+                    0x8cfc03);
         }
     }
 
