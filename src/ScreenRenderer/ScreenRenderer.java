@@ -29,7 +29,6 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
     // App specific stuff
     double phi = 0;
-    Complex z = new Complex(0,0);
     int maxiter = 10;
 
     public ScreenRenderer(int width, int height, int scale) {
@@ -132,11 +131,10 @@ public class ScreenRenderer extends Canvas implements Runnable{
         getScreen().drawPixel(200,142,
                 0x0);
         for (int c = 0; c <= ((WIDTH*HEIGTH)/scale)-1; c++) {
-            int iter = 0;
-            Complex icpx = new Complex ((c%(WIDTH/scale)),((c/WIDTH)/scale));
-            z = new Complex(0,0);
-            while (iter <= maxiter) {
-                z = (z.multiply(z)).add(icpx);
+            Complex ccpx = new Complex (((c%(WIDTH/scale))*0.01)-3,(((c/WIDTH)/scale)*0.01)-1.5);
+            Complex z = new Complex(0,0);
+            for (int iter = 0; iter <= maxiter; iter++) {
+                z = (z.multiply(z)).add(ccpx);
                 if (z.abs() >= 2.0) {
                     getScreen().drawPixel((c%(WIDTH/scale)),((c/WIDTH)/scale),
                             0x000000);
@@ -144,7 +142,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
                 } else {
                     getScreen().drawPixel((c%(WIDTH/scale)),((c/WIDTH)/scale),
                             0x8cfc03);
-                    System.out.println(z.re + " " + z.im + " " + z.abs());
+                    //System.out.println(z.re + " " + z.im + " " + z.abs());
                 }
                 iter++;
             }
