@@ -30,7 +30,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
     // App specific stuff
     double phi = 0;
     Complex z = new Complex(0,0);
-    int maxiter = 5;
+    int maxiter = 10;
 
     public ScreenRenderer(int width, int height, int scale) {
         // Screen data
@@ -131,13 +131,19 @@ public class ScreenRenderer extends Canvas implements Runnable{
         }
         getScreen().drawPixel(200,142,
                 0x0);
-        for (int i = 0; i <= (WIDTH*HEIGTH)-1; i++) {
+        for (int c = 0; c <= ((WIDTH*HEIGTH)/scale)-1; c++) {
             int iter = 0;
+            Complex icpx = new Complex ((c%(WIDTH/scale)),((c/WIDTH)/scale));
             while (iter <= maxiter) {
-                z = (z^2) + i;
-                if (Math.abs(z) > 2) {
-                    getScreen().drawPixel((i%(WIDTH/scale)),((i/WIDTH)/scale),
+                z = (z.multiply(z)).add(icpx);
+                if (z.abs() >= 2.0) {
+                    getScreen().drawPixel((c%(WIDTH/scale)),((c/WIDTH)/scale),
+                            0x000000);
+                    iter = maxiter;
+                } else {
+                    getScreen().drawPixel((c%(WIDTH/scale)),((c/WIDTH)/scale),
                             0x8cfc03);
+                    System.out.println(z.abs());
                 }
                 iter++;
             }
@@ -154,7 +160,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
         //1920x1080 with 4x4 pixels
         int height = 270;
         int width = 480;
-        int scale = 4;
+        int scale = 1;
         ScreenRenderer example =  new ScreenRenderer(width,height,scale);
         example.start();
     }
