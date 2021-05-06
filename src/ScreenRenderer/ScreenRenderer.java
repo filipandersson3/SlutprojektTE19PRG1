@@ -29,6 +29,8 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
     // App specific stuff
     double phi = 0;
+    int z = 0;
+    int maxiter = 5;
 
     public ScreenRenderer(int width, int height, int scale) {
         // Screen data
@@ -130,8 +132,17 @@ public class ScreenRenderer extends Canvas implements Runnable{
         getScreen().drawPixel(200,142,
                 0x0);
         for (int i = 0; i <= (WIDTH*HEIGTH)-1; i++) {
-            getScreen().drawPixel((i%(WIDTH/scale)),((i/WIDTH)/scale),
-                    0x8cfc03);
+            int iter = 0;
+            while (iter <= maxiter) {
+                z = (z^2) + i;
+                if (Math.abs(z) > 2) {
+                    getScreen().drawPixel((i%(WIDTH/scale)),((i/WIDTH)/scale),
+                            0x8cfc03);
+                }
+                iter++;
+            }
+            //getScreen().drawPixel((i%(WIDTH/scale)),((i/WIDTH)/scale),
+            //        0x8cfc03);
         }
     }
 
