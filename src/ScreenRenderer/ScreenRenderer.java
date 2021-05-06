@@ -29,7 +29,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
     // App specific stuff
     double phi = 0;
-    int z = 0;
+    Complex z = new Complex(0,0);
     int maxiter = 5;
 
     public ScreenRenderer(int width, int height, int scale) {
