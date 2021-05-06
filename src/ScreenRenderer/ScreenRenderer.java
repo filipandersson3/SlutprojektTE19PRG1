@@ -134,6 +134,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
         for (int c = 0; c <= ((WIDTH*HEIGTH)/scale)-1; c++) {
             int iter = 0;
             Complex icpx = new Complex ((c%(WIDTH/scale)),((c/WIDTH)/scale));
+            z = new Complex(0,0);
             while (iter <= maxiter) {
                 z = (z.multiply(z)).add(icpx);
                 if (z.abs() >= 2.0) {
@@ -143,7 +144,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
                 } else {
                     getScreen().drawPixel((c%(WIDTH/scale)),((c/WIDTH)/scale),
                             0x8cfc03);
-                    System.out.println(z.abs());
+                    System.out.println(z.re + " " + z.im + " " + z.abs());
                 }
                 iter++;
             }
