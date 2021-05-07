@@ -24,12 +24,12 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
     private Thread thread;
     private boolean running = false;
-    private int fps = 60;
-    private int ups = 60;
+    private int fps = 10;
+    private int ups = 10;
 
     // App specific stuff
     double phi = 0;
-    int maxiter = 10;
+    int maxiter = 1000;
 
     public ScreenRenderer(int width, int height, int scale) {
         // Screen data
@@ -137,11 +137,11 @@ public class ScreenRenderer extends Canvas implements Runnable{
                 z = (z.multiply(z)).add(ccpx);
                 if (z.abs() >= 2.0) {
                     getScreen().drawPixel((c%(WIDTH/scale)),((c/WIDTH)/scale),
-                            0x000000);
+                            0x000000+iter*25);
                     iter = maxiter;
                 } else {
                     getScreen().drawPixel((c%(WIDTH/scale)),((c/WIDTH)/scale),
-                            0x8cfc03);
+                            0x000000);
                     //System.out.println(z.re + " " + z.im + " " + z.abs());
                 }
                 iter++;
