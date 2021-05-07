@@ -30,6 +30,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
     // App specific stuff
     double phi = 0;
     int maxiter = 1000;
+    Color iterclr = new Color(0,0,0);
 
     public ScreenRenderer(int width, int height, int scale) {
         // Screen data
@@ -137,7 +138,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
                 z = (z.multiply(z)).add(ccpx);
                 if (z.abs() >= 2.0) {
                     getScreen().drawPixel((c%(WIDTH/scale)),((c/WIDTH)/scale),
-                            0x000000+iter*25);
+                            Color.HSBtoRGB(iter*0.001f+0.63f,iter*0.001f+0.8f,iter*0.01f+0.6f));
                     iter = maxiter;
                 } else {
                     getScreen().drawPixel((c%(WIDTH/scale)),((c/WIDTH)/scale),
