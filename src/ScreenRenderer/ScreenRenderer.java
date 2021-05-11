@@ -2,6 +2,9 @@ package ScreenRenderer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -51,6 +54,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
         frame.add(this);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addKeyListener(new KL());
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.requestFocus();
@@ -132,8 +136,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
         if (phi > 2*Math.PI) {
             phi -= 2*Math.PI;
         }
-        getScreen().drawPixel(200,142,
-                0x0);
+        // http://math.hws.edu/eck/cs124/javanotes7/c12/s2.html#threads.2.4 för fler trådar
         for (int c = 0; c <= ((WIDTH*HEIGTH)/scale)-1; c++) {
             //gör c till ett ställe på koordinatsystemet, zoom förändrar storleken på fraktalen, offset ändrar var den börjar
             Complex ccpx = new Complex (((c%(WIDTH/scale))*0.01/zoom)-3+offsetx,(((c/WIDTH)/scale)*0.01/zoom)-1.5+offsety);
@@ -167,6 +170,34 @@ public class ScreenRenderer extends Canvas implements Runnable{
         int scale = 1;
         ScreenRenderer example =  new ScreenRenderer(width,height,scale);
         example.start();
+    }
+    private class KL implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent keyEvent) {
+            if (keyEvent.getKeyChar() == 'a') {
+                offsetx = offsetx-0.001;
+            }
+            if (keyEvent.getKeyChar() == 'd') {
+                offsetx = offsetx+0.001;
+            }
+            if (keyEvent.getKeyChar() == 'w') {
+                offsety = offsety-0.001;
+            }
+            if (keyEvent.getKeyChar() == 's') {
+                offsety = offsety+0.001;
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent keyEvent) {
+
+        }
     }
 
 }
