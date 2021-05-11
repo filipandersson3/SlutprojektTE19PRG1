@@ -24,13 +24,16 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
     private Thread thread;
     private boolean running = false;
-    private int fps = 10;
-    private int ups = 10;
+    private int fps = 1;
+    private int ups = 1;
 
     // App specific stuff
     double phi = 0;
-    int maxiter = 1000;
+    int maxiter = 200;
     Color iterclr = new Color(0,0,0);
+    double zoom = 2000.0;
+    double offsetx = 2;
+    double offsety = 1.2;
 
     public ScreenRenderer(int width, int height, int scale) {
         // Screen data
@@ -132,7 +135,8 @@ public class ScreenRenderer extends Canvas implements Runnable{
         getScreen().drawPixel(200,142,
                 0x0);
         for (int c = 0; c <= ((WIDTH*HEIGTH)/scale)-1; c++) {
-            Complex ccpx = new Complex (((c%(WIDTH/scale))*0.01)-3,(((c/WIDTH)/scale)*0.01)-1.5);
+            //gör c till ett ställe på koordinatsystemet, zoom förändrar storleken på fraktalen, offset ändrar var den börjar
+            Complex ccpx = new Complex (((c%(WIDTH/scale))*0.01/zoom)-3+offsetx,(((c/WIDTH)/scale)*0.01/zoom)-1.5+offsety);
             Complex z = new Complex(0,0);
             for (int iter = 0; iter <= maxiter; iter++) {
                 z = (z.multiply(z)).add(ccpx);
@@ -158,8 +162,8 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
     public static void main(String[] args) {
         //1920x1080 with 4x4 pixels
-        int height = 270;
-        int width = 480;
+        int height = 1080;
+        int width = 1920;
         int scale = 1;
         ScreenRenderer example =  new ScreenRenderer(width,height,scale);
         example.start();
