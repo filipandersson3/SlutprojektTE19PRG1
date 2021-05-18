@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -143,7 +142,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
             Complex z = new Complex(0,0);
             for (int iter = 0; iter <= maxiter; iter++) {
                 z = (z.multiply(z)).add(ccpx);
-                if (z.abs() >= 2.0) {
+                if (z.re*z.re+z.im*z.im >= 4.0) {
                     getScreen().drawPixel((c%(WIDTH/scale)),((c/WIDTH)/scale),
                             Color.HSBtoRGB(iter*0.001f+0.63f,iter*0.001f+0.8f,iter*0.01f+0.6f));
                     iter = maxiter;
@@ -191,6 +190,12 @@ public class ScreenRenderer extends Canvas implements Runnable{
             }
             if (keyEvent.getKeyChar() == 's') {
                 offsety = offsety+0.001;
+            }
+            if (keyEvent.getKeyChar() == '+') {
+                zoom = zoom*1.5;
+            }
+            if (keyEvent.getKeyChar() == '-') {
+                zoom = zoom/1.5;
             }
         }
 
