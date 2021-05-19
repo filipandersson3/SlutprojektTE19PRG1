@@ -30,12 +30,11 @@ public class ScreenRenderer extends Canvas implements Runnable{
     private int ups = 1;
 
     // App specific stuff
-    double phi = 0;
     int maxiter = 200;
-    Color iterclr = new Color(0,0,0);
     double zoom = 2000.0;
     double offsetx = 2;
     double offsety = 1.2;
+    private Worker worker;
 
     public ScreenRenderer(int width, int height, int scale) {
         // Screen data
@@ -65,6 +64,14 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
     public synchronized void start() {
         running = true;
+        Worker worker = new Worker(WIDTH,HEIGTH,scale,screen,zoom,offsetx,offsety);
+        worker.start();
+        try {
+            worker.setPriority( Thread.currentThread().getPriority() - 1 );
+        }
+        catch (Exception e) {
+            System.out.println("Error: Can't set thread priority: " + e);
+        }
         thread = new Thread(this);
         thread.start();
     }
@@ -72,7 +79,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
     public synchronized void stop() {
         running = false;
         try {
-            thread.join();
+            worker.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -131,12 +138,8 @@ public class ScreenRenderer extends Canvas implements Runnable{
     }
 
     public void update() {
-        phi += Math.PI/180;
-        if (phi > 2*Math.PI) {
-            phi -= 2*Math.PI;
-        }
         // http://math.hws.edu/eck/cs124/javanotes7/c12/s2.html#threads.2.4 för fler trådar
-        for (int c = 0; c <= ((WIDTH*HEIGTH)/scale)-1; c++) {
+        /*for (int c = 0; c <= ((WIDTH*HEIGTH)/scale)-1; c++) {
             //gör c till ett ställe på koordinatsystemet, zoom förändrar storleken på fraktalen, offset ändrar var den börjar
             Complex ccpx = new Complex (((c%(WIDTH/scale))*0.01/zoom)-3+offsetx,(((c/WIDTH)/scale)*0.01/zoom)-1.5+offsety);
             Complex z = new Complex(0,0);
@@ -149,13 +152,11 @@ public class ScreenRenderer extends Canvas implements Runnable{
                 } else {
                     getScreen().drawPixel((c%(WIDTH/scale)),((c/WIDTH)/scale),
                             0x000000);
-                    //System.out.println(z.re + " " + z.im + " " + z.abs());
                 }
                 iter++;
             }
-            //getScreen().drawPixel((i%(WIDTH/scale)),((i/WIDTH)/scale),
-            //        0x8cfc03);
         }
+        */
     }
 
     public Screen getScreen() {
