@@ -12,9 +12,11 @@ public class Worker extends Thread {
     private double zoom;
     private double offsetx;
     private double offsety;
+    private int startRow;
+    private int endRow;
 
     public Worker(int width, int heigth, int scale, Screen screen,
-                  double zoom, double offsetx, double offsety) {
+                  double zoom, double offsetx, double offsety, int startRow, int endRow) {
         WIDTH = width;
         HEIGTH = heigth;
         this.scale = scale;
@@ -22,13 +24,15 @@ public class Worker extends Thread {
         this.zoom = zoom;
         this.offsetx = offsetx;
         this.offsety = offsety;
+        this.startRow = startRow;
+        this.endRow = endRow;
     }
 
     public void run() {
         // http://math.hws.edu/eck/cs124/javanotes7/c12/s2.html#threads.2.4 för fler trådar
-        for (int c = 0; c <= ((WIDTH*HEIGTH)/scale)-1; c++) {
+        for (int c = WIDTH*startRow; c <= ((WIDTH*endRow)/scale)-1; c++) {
             //gör c till ett ställe på koordinatsystemet, zoom förändrar storleken på fraktalen, offset ändrar var den börjar
-            Complex ccpx = new Complex (((c%(WIDTH/scale))*0.01/zoom)-3+offsetx,(((c/WIDTH)/scale)*0.01/zoom)-1.5+offsety);
+            Complex ccpx = new Complex ((c%(WIDTH)*0.01/zoom)-3+offsetx,((c/WIDTH)*0.01/zoom)-1.5+offsety);
             Complex z = new Complex(0,0);
             for (int iter = 0; iter <= maxiter; iter++) {
                 z = (z.multiply(z)).add(ccpx);

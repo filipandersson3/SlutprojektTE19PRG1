@@ -31,10 +31,12 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
     // App specific stuff
     int maxiter = 200;
-    double zoom = 2000.0;
+    double zoom = 1;
     double offsetx = 2;
     double offsety = 1.2;
     private Worker worker;
+    int startRow;
+    int endRow;
 
     public ScreenRenderer(int width, int height, int scale) {
         // Screen data
@@ -64,7 +66,7 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
     public synchronized void start() {
         running = true;
-        Worker worker = new Worker(WIDTH,HEIGTH,scale,screen,zoom,offsetx,offsety);
+        Worker worker = new Worker(WIDTH,HEIGTH,scale,screen,zoom,offsetx,offsety,0,1079);
         worker.start();
         try {
             worker.setPriority( Thread.currentThread().getPriority() - 1 );
@@ -202,7 +204,12 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
         @Override
         public void keyReleased(KeyEvent keyEvent) {
-
+            for (int i = 1; i < Thread.activeCount(); i++) {
+                startRow = ((HEIGTH / Thread.activeCount()) * (i - 1));
+                endRow = ((HEIGTH / Thread.activeCount()) * i) - 1;
+                Worker worker = new Worker(WIDTH, HEIGTH, scale, screen, zoom, offsetx, offsety, startRow, endRow);
+                worker.start();
+            }
         }
     }
 
