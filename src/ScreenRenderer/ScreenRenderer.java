@@ -32,9 +32,10 @@ public class ScreenRenderer extends Canvas implements Runnable{
     // App specific stuff
     int maxiter = 200;
     double zoom = 1;
-    double offsetx = 2;
-    double offsety = 1.2;
+    double offsetx = 0;
+    double offsety = 0;
     private Worker worker;
+    Worker[] workers = new Worker[1000];
     int startRow;
     int endRow;
 
@@ -183,16 +184,16 @@ public class ScreenRenderer extends Canvas implements Runnable{
         @Override
         public void keyPressed(KeyEvent keyEvent) {
             if (keyEvent.getKeyChar() == 'a') {
-                offsetx = offsetx-0.001;
+                offsetx = offsetx-0.05;
             }
             if (keyEvent.getKeyChar() == 'd') {
-                offsetx = offsetx+0.001;
+                offsetx = offsetx+0.05;
             }
             if (keyEvent.getKeyChar() == 'w') {
-                offsety = offsety-0.001;
+                offsety = offsety-0.05;
             }
             if (keyEvent.getKeyChar() == 's') {
-                offsety = offsety+0.001;
+                offsety = offsety+0.05;
             }
             if (keyEvent.getKeyChar() == '+') {
                 zoom = zoom*1.5;
@@ -204,9 +205,9 @@ public class ScreenRenderer extends Canvas implements Runnable{
 
         @Override
         public void keyReleased(KeyEvent keyEvent) {
-            for (int i = 1; i < Thread.activeCount(); i++) {
-                startRow = ((HEIGTH / Thread.activeCount()) * (i - 1));
-                endRow = ((HEIGTH / Thread.activeCount()) * i) - 1;
+            for (int i = 1; i < Runtime.getRuntime().availableProcessors(); i++) {
+                startRow = ((HEIGTH / Runtime.getRuntime().availableProcessors()) * (i - 1));
+                endRow = ((HEIGTH / Runtime.getRuntime().availableProcessors()) * i);
                 Worker worker = new Worker(WIDTH, HEIGTH, scale, screen, zoom, offsetx, offsety, startRow, endRow);
                 worker.start();
             }
