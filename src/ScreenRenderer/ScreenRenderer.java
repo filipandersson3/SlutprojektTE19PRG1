@@ -32,8 +32,8 @@ public class ScreenRenderer extends Canvas implements Runnable{
     // App specific stuff
     int maxiter = 200;
     double zoom = 1;
-    double offsetx = 0;
-    double offsety = 0;
+    double offsetx = -3.5;
+    double offsety = -1.9;
     private Worker worker;
     Worker[] workers = new Worker[1000];
     int startRow;
@@ -184,18 +184,20 @@ public class ScreenRenderer extends Canvas implements Runnable{
         @Override
         public void keyPressed(KeyEvent keyEvent) {
             if (keyEvent.getKeyChar() == 'a') {
-                offsetx = offsetx-0.05;
+                offsetx = offsetx-0.2;
             }
             if (keyEvent.getKeyChar() == 'd') {
-                offsetx = offsetx+0.05;
+                offsetx = offsetx+0.2;
             }
             if (keyEvent.getKeyChar() == 'w') {
-                offsety = offsety-0.05;
+                offsety = offsety-0.2;
             }
             if (keyEvent.getKeyChar() == 's') {
-                offsety = offsety+0.05;
+                offsety = offsety+0.2;
             }
             if (keyEvent.getKeyChar() == '+') {
+                offsetx = offsetx+zoom;
+                offsety = offsety+zoom;
                 zoom = zoom*1.5;
             }
             if (keyEvent.getKeyChar() == '-') {
