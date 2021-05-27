@@ -30,7 +30,7 @@ public class FractalViewer extends Canvas implements Runnable{
     private int ups = 1;
 
     // App specific stuff
-    int maxiter = 200;
+    int maxiter;
     double zoom = 5.0625;
     double offsetx = -2.2635895612118744;
     double offsety = -1.0764178902267605;
@@ -65,8 +65,17 @@ public class FractalViewer extends Canvas implements Runnable{
 
     public synchronized void start() {
         running = true;
+        do {
+            try {
+                maxiter = Integer.parseInt(JOptionPane.showInputDialog(frame, "Enter precision level (1-500)"));
+            }catch (NumberFormatException e) {
+                System.out.println("not an integer");
+            }
+        }
+        while (maxiter <= 0 || maxiter > 500);
         thread = new Thread(this);
         thread.start();
+        JOptionPane.showMessageDialog(frame, "Esc to quit, WASD to move, + and - keys to zoom");
     }
 
     public synchronized void stop() {
@@ -135,7 +144,7 @@ public class FractalViewer extends Canvas implements Runnable{
         for (int i = 1; i < Runtime.getRuntime().availableProcessors(); i++) { //dela upp bilden i bitar beroende på antalet kärnor
             startRow = ((HEIGTH / (Runtime.getRuntime().availableProcessors()-1)) * (i - 1));
             endRow = ((HEIGTH / (Runtime.getRuntime().availableProcessors()-1)) * i);
-            Worker worker = new Worker(WIDTH, HEIGTH, screen, zoom, offsetx, offsety, startRow, endRow);
+            Worker worker = new Worker(WIDTH, HEIGTH, screen, zoom, offsetx, offsety, startRow, endRow, maxiter);
             worker.start();
         }
     }
@@ -176,6 +185,9 @@ public class FractalViewer extends Canvas implements Runnable{
                 offsetx = offsetx+offsetx/zoom;
                 offsety = offsety+offsety/zoom;
                 zoom = zoom/1.5;
+            }
+            if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                System.exit(0);
             }
         }
 

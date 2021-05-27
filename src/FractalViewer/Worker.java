@@ -15,7 +15,7 @@ public class Worker extends Thread {
     private int endRow;
 
     public Worker(int width, int heigth, Screen screen,
-                  double zoom, double offsetx, double offsety, int startRow, int endRow) {
+                  double zoom, double offsetx, double offsety, int startRow, int endRow, int maxiter) {
         WIDTH = width;
         HEIGTH = heigth;
         this.screen = screen;
@@ -24,6 +24,7 @@ public class Worker extends Thread {
         this.offsety = offsety;
         this.startRow = startRow;
         this.endRow = endRow;
+        this.maxiter = maxiter;
     }
 
     public void run() {
