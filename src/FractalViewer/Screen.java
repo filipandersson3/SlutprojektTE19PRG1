@@ -1,6 +1,4 @@
-package ScreenRenderer;
-
-import java.awt.*;
+package FractalViewer;
 
 /**
  * This is a class
