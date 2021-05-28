@@ -30,13 +30,14 @@ public class FractalViewer extends Canvas implements Runnable{
     private int ups = 1;
 
     // App specific stuff
-    int maxiter;
+    int maxIter;
     double zoom = 5.0625;
     double offsetx = -2.2635895612118744;
     double offsety = -1.0764178902267605;
     private Worker worker;
     int startRow;
     int endRow;
+    boolean shouldStop = false;
 
     public FractalViewer(int width, int height, int scale) {
         // Screen data
@@ -67,12 +68,12 @@ public class FractalViewer extends Canvas implements Runnable{
         running = true;
         do {
             try {
-                maxiter = Integer.parseInt(JOptionPane.showInputDialog(frame, "Enter precision level (1-500)"));
+                maxIter = Integer.parseInt(JOptionPane.showInputDialog(frame, "Enter precision level (1-500)"));
             }catch (NumberFormatException e) {
                 System.out.println("not an integer");
             }
         }
-        while (maxiter <= 0 || maxiter > 500);
+        while (maxIter <= 0 || maxIter > 500);
         thread = new Thread(this);
         thread.start();
         JOptionPane.showMessageDialog(frame, "Esc to quit, WASD to move, + and - keys to zoom");
@@ -144,7 +145,7 @@ public class FractalViewer extends Canvas implements Runnable{
         for (int i = 1; i < Runtime.getRuntime().availableProcessors(); i++) { //dela upp bilden i bitar beroende på antalet kärnor
             startRow = ((HEIGTH / (Runtime.getRuntime().availableProcessors()-1)) * (i - 1));
             endRow = ((HEIGTH / (Runtime.getRuntime().availableProcessors()-1)) * i);
-            Worker worker = new Worker(WIDTH, HEIGTH, screen, zoom, offsetx, offsety, startRow, endRow, maxiter);
+            Worker worker = new Worker(WIDTH, HEIGTH, screen, zoom, offsetx, offsety, startRow, endRow, maxIter, shouldStop);
             worker.start();
         }
     }
@@ -193,6 +194,12 @@ public class FractalViewer extends Canvas implements Runnable{
 
         @Override
         public void keyReleased(KeyEvent keyEvent) { //man behöver inte vänta på ups
+            if (Worker.activeCount() > 10) {
+                shouldStop = true;
+                update();
+            } else {
+                shouldStop = false;
+            }
             update();
         }
     }
