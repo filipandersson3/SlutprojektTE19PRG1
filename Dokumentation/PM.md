@@ -38,9 +38,23 @@ Sen gjorde jag fps högre så att man kan se programmet rita ut bilden och gjord
 
 Här beskriver du vad som har gått bra i ditt projekt och analyserar varför. Hur ska du upprepa framgångarna.
 
+Det gick bra att:
+
+* Göra som jag hade planerat för att jag försökte att förstå problemet innan jag började koda.
+* Göra multithreading för att jag läste koden från vad någon annan hade gjort och försökte att förstå det och sen väntade ett tag för att kunna använda det i mitt egna program. Annars om jag bara kopierade det så hade det inte fungerat och det hade varit svårt att ändra något för att t.ex. fixa en bug om jag inte förstod hur det fungerade.
+* Förstå hur mandelbrotmängden fungerar för att det fanns bra källor på internet.
+* Skriva klasser och flytta värden mellan dom och det känns som att jag förstår bättre hur man gör nu.
+* UI fungerar ganska bra för att jag tänkte att man måste veta hur man använder programmet utan att behöva gå in i källkoden.
+
 ## Negativa erfarenheter
 
 Här beskriver du det som du anser har gått mindre bra med ditt projekt och analyserar hur du kan undvika detta i framtida projekt.
+
+Det gick sämre att:
+
+* Få zoomningen att zooma in mot mitten. Kunde göra lite förbättringar men den är inte centrerad. Skulle kunna undvika genom att lägga in någon slags offset som gör att man först går ner en halv skärm och åt höger för att zooma in mot vänstra hörnet och sedan gå en halv skärm upp och åt vänster igen för att zooma mot mitten men vet inte riktigt hur det skulle fungera.
+* Cancel knappen fungerar inte i menyn då man startar upp programmet. Den tolkar allt som inte är en int som att den ska starta en ny meny. Skulle ha tänkt på att en JOptionPane kan ge fler värden än man tror.
+* Jag gjorde så att om fler än 10 worker threads jobbar samtidigt så stannar dem och startar en ny. Det är inte så bra om man har en dator med fler än 10 kärnor för att då kommer bara en att jobba. Skulle kunna undvika genom att se hur många threads som blir ett problem för en dator och sätta gränsen där.
 
 ## Sammanfattning
 
