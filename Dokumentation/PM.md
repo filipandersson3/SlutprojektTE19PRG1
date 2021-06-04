@@ -4,8 +4,6 @@ Filip 2021-06-01
 
 ## Inledning
 
-Här beskriver du kortfattat arbetets syfte/mål, arbetssätt, genomförande.
-
 Jag hade tänkt göra ett program som kan visualisera mandelbrotmängden genom att köra en iterativ process och se vilka tal som sticker mot 0 och ritar ut dem som pixlar. Talen ska ritas ut som pixlar med färg beroende på hur många iterationer som behövs för att få reda på att det går mot 0. De tal som inte går mot 0 kan ritas med en annan färg.
 
 Mandelbrotmängden räknas ut med den här formeln:
@@ -36,8 +34,6 @@ Sen gjorde jag fps högre så att man kan se programmet rita ut bilden och gjord
 
 ## Positiva erfarenheter
 
-Här beskriver du vad som har gått bra i ditt projekt och analyserar varför. Hur ska du upprepa framgångarna.
-
 Det gick bra att:
 
 * Göra som jag hade planerat för att jag försökte att förstå problemet innan jag började koda.
@@ -48,8 +44,6 @@ Det gick bra att:
 
 ## Negativa erfarenheter
 
-Här beskriver du det som du anser har gått mindre bra med ditt projekt och analyserar hur du kan undvika detta i framtida projekt.
-
 Det gick sämre att:
 
 * Få zoomningen att zooma in mot mitten. Kunde göra lite förbättringar men den är inte centrerad. Skulle kunna undvika genom att lägga in någon slags offset som gör att man först går ner en halv skärm och åt höger för att zooma in mot vänstra hörnet och sedan gå en halv skärm upp och åt vänster igen för att zooma mot mitten men vet inte riktigt hur det skulle fungera.
@@ -58,5 +52,13 @@ Det gick sämre att:
 
 ## Sammanfattning
 
-Här redovisar du dina slutsatser, erfarenheter och lärdomar. Reflektera över din produkt och dess/dina utvecklingsmöjligheter.
-Vad kan vidareutvecklas och finns det utrymme att bygga vidare på projektet.
+* Planering gick bra, programmet blev som jag ville och jag hade tid.
+* Multithreading gick bra, förstår hur det funkar och det blev mycket snabbare.
+* Det gick bra att förstå problemet för att det fanns bra sidor att läsa om mandelbrotmängden på internet
+* Skriva klasser och flytta värden mellan dom känns som att jag förstår bättre nu.
+* UI fungerar ganska bra för att jag tänkte att folk måste kunna använda det.
+* Det gick sämre att få zoomningen att zooma mot mitten, måste förstå hur zooming fungerar nästa gång jag använder det.
+* Borde tänka på att JOptionPane måste kunna kryssas ut och cancelas.
+* Borde göra program tillgängliga för ännu fler kärnor.
+
+Utvecklingsmöjligheter skulle vara att fixa det som gick mindre bra och se om optimeringen skulle kunna göras bättre. Hade varit roligt om man kunde ha en inställning som gör att mängden iterationer beror på vilken prestanda man får så att programmet inte känns långsamt. Skulle också kunna göra så att man kan välja olika fraktaler, ändrar man bara beräkningen så skulle det nog fungera. Det skulle nog också gå mycket fortare om man gjorde beräkningen på GPU för att då tror jag att man får mycket mer trådar som kan köras samtidigt.
