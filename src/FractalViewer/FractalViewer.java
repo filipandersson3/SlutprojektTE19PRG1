@@ -178,8 +178,8 @@ public class FractalViewer extends Canvas implements Runnable{
             }
             if (keyEvent.getKeyChar() == '+') {
                 zoom = zoom*1.5;
-                offsetx = offsetx-offsetx/zoom;
-                offsety = offsety-offsety/zoom;
+                offsetx = offsetx-(offsetx/zoom)*3;
+                offsety = offsety-(offsety/zoom)*3;
 
             }
             if (keyEvent.getKeyChar() == '-') {
